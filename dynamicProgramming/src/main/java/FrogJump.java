@@ -32,6 +32,22 @@ public class FrogJump {
 
 
     public boolean canCrossTopDown(int[] stones) {
-        
+        if (stones.length == 0) return false;
+        int lastStone = stones[stones.length - 1];
+        return helper(stones, lastStone, Integer.MAX_VALUE, stones.length - 2);
+    }
+
+    public boolean helper(int[] stones, int stone, int jump, int index) {
+        if (index < 0) return false;
+        if (index == 0) {
+            return jump == 1;
+        }
+
+        int currentStone = stones[index];
+        int currjump = stone - currentStone;
+        if (jump != Integer.MAX_VALUE && !(jump == currjump || jump + 1 == currjump ||
+            jump - 1 == currjump)) return false;
+        return helper(stones, currentStone, currjump, index - 1) ||
+                helper(stones, stone, jump, index - 1);
     }
 }
